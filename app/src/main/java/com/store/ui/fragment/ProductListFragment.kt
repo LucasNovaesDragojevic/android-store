@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.store.R
 import com.store.model.Product
+import com.store.ui.activity.CHAVE_PRODUTO_ID
 import com.store.ui.recyclerview.adapter.ProductAdapter
 import com.store.ui.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
@@ -20,7 +22,9 @@ class ProductListFragment : Fragment() {
 
     private val viewModel: ProductViewModel by viewModel()
     private val adapter: ProductAdapter by inject()
-    var quandoProdutoSelecionado: (produto: Product) -> Unit = {}
+    private val navController by lazy {
+        findNavController()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +59,11 @@ class ProductListFragment : Fragment() {
         val divisor = DividerItemDecoration(context, LinearLayout.VERTICAL)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.lista_produtos_recyclerview)
         recyclerView?.addItemDecoration(divisor)
-        adapter.onItemClickListener = quandoProdutoSelecionado
+        adapter.onItemClickListener = {
+            val data = Bundle()
+            data.putLong(CHAVE_PRODUTO_ID, it.id)
+            navController.navigate(R.id.productDetailsFragment, data)
+        }
         recyclerView?.adapter = adapter
     }
 

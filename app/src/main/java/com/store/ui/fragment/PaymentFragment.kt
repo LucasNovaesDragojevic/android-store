@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.store.R
 import com.store.extension.formatToBrazilianMoney
@@ -29,9 +30,11 @@ class PaymentFragment : Fragment() {
 
     private val viewModel: PaymentViewModel by viewModel()
 
-    private lateinit var produtoEscolhido: Product
+    private val navController by lazy {
+        findNavController()
+    }
 
-    var quandoPagamentoRealizado: (idPagamento: Long) -> Unit = {}
+    private lateinit var produtoEscolhido: Product
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,10 +75,12 @@ class PaymentFragment : Fragment() {
 
     private fun salva(pagamento: Payment) {
         if (::produtoEscolhido.isInitialized) {
-            viewModel.save(pagamento)
-                .observe(this, Observer {
-                    it?.data?.let(quandoPagamentoRealizado)
-                })
+            viewModel.save(pagamento).observe(this) {
+                    it?.data?.let {
+                        Toast.makeText(context, "Purchase concluded", Toast.LENGTH_SHORT).show()
+                        navController.navigate(R.id.productListFragment)
+                    }
+                }
         }
     }
 

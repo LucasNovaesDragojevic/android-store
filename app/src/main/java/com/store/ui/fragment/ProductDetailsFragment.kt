@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.store.R
 import com.store.extension.formatToBrazilianMoney
 import com.store.model.Product
@@ -21,6 +21,9 @@ class ProductDetailsFragment : Fragment() {
     private val productId by lazy {
         arguments?.getLong(CHAVE_PRODUTO_ID)
             ?: throw IllegalArgumentException(ID_PRODUTO_INVALIDO)
+    }
+    private val navController by lazy {
+        findNavController()
     }
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
 
@@ -47,7 +50,11 @@ class ProductDetailsFragment : Fragment() {
     private fun configuraBotaoComprar() {
         val button = view?.findViewById<Button>(R.id.detalhes_produto_botao_comprar)
         button?.setOnClickListener {
-            viewModel.productFound.value?.let(quandoProdutoComprado)
+            viewModel.productFound.value?.let {
+                val data = Bundle()
+                data.putLong(CHAVE_PRODUTO_ID, productId)
+                navController.navigate(R.id.paymentFragment, data)
+            }
         }
     }
 
