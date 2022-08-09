@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Store</string>
+    <string name="buy">Buy</string>
+    <string name="cvc">cvc</string>
+    <string name="confirm_payment">Confirm payment</string>
+    <string name="card_number">Card number</string>
+    <string name="card_expirarion">Card expiration</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
