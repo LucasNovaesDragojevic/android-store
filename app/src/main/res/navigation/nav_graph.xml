@@ -8,14 +8,26 @@
         android:id="@+id/productListFragment"
         android:label="ProductListFragment"
         android:name="com.store.ui.fragment.ProductListFragment"
-        tools:layout="@layout/product_list" />
+        tools:layout="@layout/product_list" >
+        <action
+            android:id="@+id/goToProductDetails"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
     <fragment android:id="@+id/productDetailsFragment"
         android:label="ProductDetailsFragment"
         android:name="com.store.ui.fragment.ProductDetailsFragment"
-        tools:layout="@layout/product_details"/>
+        tools:layout="@layout/product_details">
+        <action
+            android:id="@+id/goToPayment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.store.ui.fragment.PaymentFragment"
         android:label="PaymentFragment"
-        tools:layout="@layout/payment"/>
+        tools:layout="@layout/payment">
+        <action
+            android:id="@+id/goToProductList"
+            app:destination="@id/productListFragment" />
+    </fragment>
 </navigation>

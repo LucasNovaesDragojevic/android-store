@@ -27,8 +27,6 @@ class ProductDetailsFragment : Fragment() {
     }
     private val viewModel: ProductDetailsViewModel by viewModel { parametersOf(productId) }
 
-    var quandoProdutoComprado: (product: Product) -> Unit = {}
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,7 +51,7 @@ class ProductDetailsFragment : Fragment() {
             viewModel.productFound.value?.let {
                 val data = Bundle()
                 data.putLong(CHAVE_PRODUTO_ID, productId)
-                navController.navigate(R.id.paymentFragment, data)
+                navController.navigate(R.id.goToPayment, data)
             }
         }
     }

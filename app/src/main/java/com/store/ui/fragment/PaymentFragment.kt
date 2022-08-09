@@ -78,7 +78,7 @@ class PaymentFragment : Fragment() {
             viewModel.save(pagamento).observe(this) {
                     it?.data?.let {
                         Toast.makeText(context, "Purchase concluded", Toast.LENGTH_SHORT).show()
-                        navController.navigate(R.id.productListFragment)
+                        navController.popBackStack(R.id.goToProductList, false)
                     }
                 }
         }
