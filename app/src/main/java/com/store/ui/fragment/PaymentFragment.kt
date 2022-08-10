@@ -10,12 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputLayout
 import com.store.R
 import com.store.extension.formatToBrazilianMoney
 import com.store.model.Payment
 import com.store.model.Product
-import com.store.ui.activity.CHAVE_PRODUTO_ID
 import com.store.ui.viewmodel.PaymentViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,30 +23,13 @@ private const val FALHA_AO_CRIAR_PAGAMENTO = "Falha ao criar pagamento"
 
 class PaymentFragment : Fragment() {
 
-    private val produtoId by lazy {
-        arguments?.getLong(CHAVE_PRODUTO_ID)
-            ?: throw IllegalArgumentException(ID_PRODUTO_INVALIDO)
-    }
-
-    private val viewModel: PaymentViewModel by viewModel()
-
-    private val navController by lazy {
-        findNavController()
-    }
-
+    private val arguments by navArgs<PaymentFragmentArgs>()
+    private val productId by lazy { arguments.productId }
+    private val navController by lazy { findNavController() }
+    private val viewModel by viewModel<PaymentViewModel>()
     private lateinit var produtoEscolhido: Product
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            R.layout.payment,
-            container,
-            false
-        )
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.payment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,7 +38,7 @@ class PaymentFragment : Fragment() {
     }
 
     private fun buscaProduto() {
-        viewModel.findById(produtoId).observe(viewLifecycleOwner, Observer {
+        viewModel.findById(productId).observe(viewLifecycleOwner, Observer {
             it?.let { produtoEncontrado ->
                 produtoEscolhido = produtoEncontrado
                 view?.findViewById<TextView>(R.id.item_produto_preco)?.text = produtoEncontrado.price.formatToBrazilianMoney()
@@ -64,12 +47,11 @@ class PaymentFragment : Fragment() {
     }
 
     private fun configuraBotaoConfirmaPagamento() {
-        view?.findViewById<Button>(R.id.pagamento_botao_confirma_pagamento)?.setOnClickListener {
-            criaPagamento()?.let(this::salva) ?: Toast.makeText(
-                context,
-                FALHA_AO_CRIAR_PAGAMENTO,
-                Toast.LENGTH_LONG
-            ).show()
+        view?.findViewById<Button>(R.id.pagamento_botao_confirma_pagamento)
+            ?.setOnClickListener {
+                criaPagamento()
+                    ?.let(this::salva)
+                    ?: Toast.makeText(context, FALHA_AO_CRIAR_PAGAMENTO, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -78,7 +60,8 @@ class PaymentFragment : Fragment() {
             viewModel.save(pagamento).observe(this) {
                     it?.data?.let {
                         Toast.makeText(context, "Purchase concluded", Toast.LENGTH_SHORT).show()
-                        navController.popBackStack(R.id.goToProductList, false)
+                        val direction = PaymentFragmentDirections.goToProductList()
+                        navController.navigate(direction)
                     }
                 }
         }
@@ -91,16 +74,12 @@ class PaymentFragment : Fragment() {
         return geraPagamento(numeroCartao, dataValidade, cvc)
     }
 
-    private fun geraPagamento(
-        numeroCartao: String,
-        dataValidade: String,
-        cvc: String
-    ): Payment? = try {
+    private fun geraPagamento(numeroCartao: String, dataValidade: String, cvc: String): Payment? = try {
         Payment(
             cardNumber = numeroCartao.toInt(),
             cardExpiration = dataValidade,
             cvc = cvc.toInt(),
-            productId = produtoId,
+            productId = productId,
             price = produtoEscolhido.price
         )
     } catch (e: NumberFormatException) {

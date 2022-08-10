@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -37,7 +38,7 @@ dependencies {
     def koin_version = "3.2.0"
     def lifecycle_version = '2.5.1'
     def kotlinx_coroutines_version = '1.6.4'
-    def nav_version = "2.5.1"
+//    def nav_version = "2.5.1"
 
 
     implementation "androidx.room:room-runtime:$room_version"

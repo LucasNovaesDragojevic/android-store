@@ -11,7 +11,11 @@
         tools:layout="@layout/product_list" >
         <action
             android:id="@+id/goToProductDetails"
-            app:destination="@id/productDetailsFragment" />
+            app:destination="@id/productDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment android:id="@+id/productDetailsFragment"
         android:label="ProductDetailsFragment"
@@ -19,7 +23,14 @@
         tools:layout="@layout/product_details">
         <action
             android:id="@+id/goToPayment"
-            app:destination="@id/paymentFragment" />
+            app:destination="@id/paymentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="productId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
@@ -28,6 +39,12 @@
         tools:layout="@layout/payment">
         <action
             android:id="@+id/goToProductList"
-            app:destination="@id/productListFragment" />
+            app:destination="@id/productListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="productId"
+            app:argType="long" />
     </fragment>
 </navigation>
