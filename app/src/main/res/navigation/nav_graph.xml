@@ -41,10 +41,56 @@
             android:id="@+id/goToProductList"
             app:destination="@id/productListFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/productListFragment"
             app:popUpToInclusive="true" />
         <argument
             android:name="productId"
             app:argType="long" />
     </fragment>
+    <action
+        android:id="@+id/action_global_login"
+        app:destination="@id/loginGraph"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true" />
+    <navigation
+        android:id="@+id/loginGraph"
+        android:label="loginGraph"
+        app:startDestination="@id/loginFragment">
+        <fragment
+            android:id="@+id/userRegistrationFragment"
+            android:name="com.store.ui.fragment.UserRegistrationFragment"
+            android:label="User registration"
+            tools:layout="@layout/user_registration" />
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.store.ui.fragment.LoginFragment"
+            android:label="LoginFragment"
+            tools:layout="@layout/login">
+            <action
+                android:id="@+id/loginToProductList"
+                app:destination="@id/productListFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/loginToUserRegistration"
+                app:destination="@id/userRegistrationFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right" />
+        </fragment>
+    </navigation>
+    <fragment
+        android:id="@+id/paymentListFragment"
+        android:name="com.store.ui.fragment.PaymentListFragment"
+        android:label="PaymentListFragment"
+        tools:layout="@layout/lista_pagamentos"/>
 </navigation>

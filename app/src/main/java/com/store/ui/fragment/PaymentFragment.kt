@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,23 +15,28 @@ import com.store.R
 import com.store.extension.formatToBrazilianMoney
 import com.store.model.Payment
 import com.store.model.Product
+import com.store.ui.viewmodel.MainViewModel
 import com.store.ui.viewmodel.PaymentViewModel
+import com.store.ui.viewmodel.VisualComponent
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val FALHA_AO_CRIAR_PAGAMENTO = "Falha ao criar pagamento"
 
-class PaymentFragment : Fragment() {
+class PaymentFragment : BaseFragment() {
 
     private val arguments by navArgs<PaymentFragmentArgs>()
     private val productId by lazy { arguments.productId }
     private val navController by lazy { findNavController() }
     private val viewModel by viewModel<PaymentViewModel>()
+    private val mainViewModel: MainViewModel by sharedViewModel()
     private lateinit var produtoEscolhido: Product
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.payment, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainViewModel.hasComponents = VisualComponent(appBar = true, bottomNavigation = false)
         configuraBotaoConfirmaPagamento()
         buscaProduto()
     }

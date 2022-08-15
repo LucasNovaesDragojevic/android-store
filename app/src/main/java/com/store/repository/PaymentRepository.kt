@@ -2,6 +2,7 @@ package com.store.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Query
 import com.store.database.dao.PaymentDao
 import com.store.model.Payment
 import kotlinx.coroutines.CoroutineScope
@@ -23,4 +24,5 @@ class PaymentRepository(private val dao: PaymentDao) {
         }
     }
 
+    fun findAll() = dao.findAll()
 }

@@ -11,5 +11,5 @@ class PaymentViewModel(
 
     fun save(payment: Payment) = paymentRepository.save(payment)
     fun findById(id: Long) = productRepository.findById(id)
-
+    fun findAll() = paymentRepository.findAll()
 }
