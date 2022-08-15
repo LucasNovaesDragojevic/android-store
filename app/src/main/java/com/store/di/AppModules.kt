@@ -4,10 +4,12 @@ import androidx.preference.PreferenceManager
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.store.database.AppDatabase
 import com.store.database.dao.ProductDao
 import com.store.model.Product
-import com.store.repository.LoginRepository
+import com.store.repository.FirebaseAuthRepository
 import com.store.repository.PaymentRepository
 import com.store.repository.ProductRepository
 import com.store.ui.fragment.PaymentFragment
@@ -71,7 +73,7 @@ val daoModule = module {
     single { get<AppDatabase>().paymentDao() }
     single { ProductRepository(get()) }
     single { PaymentRepository(get()) }
-    single { LoginRepository(get()) }
+    single { FirebaseAuthRepository(get()) }
 }
 
 val uiModule = module {
@@ -88,4 +90,10 @@ val viewModelModule = module {
     viewModel { PaymentViewModel(get(), get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { MainViewModel() }
+    viewModel { UserRegistrationViewModel(get()) }
+    viewModel { AccountViewModel(get()) }
+}
+
+val firebaseModule = module {
+    single { Firebase.auth }
 }

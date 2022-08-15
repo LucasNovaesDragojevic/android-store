@@ -1,3 +1,3 @@
 package com.store.repository
 
-class Resource<T>(val data: T)
+class Resource<T>(val data: T, val error: String? = null)

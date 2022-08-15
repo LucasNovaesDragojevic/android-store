@@ -41,7 +41,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun checkIfLogged() {
-        if (loginViewModel.isNotLogged())
+        if (loginViewModel.isLogged())
             goToLogin()
     }
 }

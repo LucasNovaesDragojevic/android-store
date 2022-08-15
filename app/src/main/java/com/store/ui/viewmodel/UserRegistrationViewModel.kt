@@ -1,14 +1,14 @@
 package com.store.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.store.model.User
 import com.store.repository.FirebaseAuthRepository
+import com.store.repository.Resource
 
-class LoginViewModel(
+class UserRegistrationViewModel(
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
 
-    fun login(user: User) = firebaseAuthRepository.login(user)
-    fun logout() = firebaseAuthRepository.logout()
-    fun isLogged() = firebaseAuthRepository.isLogged()
+    fun register(user: User): LiveData<Resource<Boolean>> = firebaseAuthRepository.register(user)
 }

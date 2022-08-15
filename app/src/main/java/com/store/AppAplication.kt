@@ -16,7 +16,8 @@ class AppApplication : Application() {
                     preferencesModule,
                     daoModule,
                     uiModule,
-                    viewModelModule
+                    viewModelModule,
+                    firebaseModule
                 )
             )
         }

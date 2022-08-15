@@ -93,4 +93,9 @@
         android:name="com.store.ui.fragment.PaymentListFragment"
         android:label="PaymentListFragment"
         tools:layout="@layout/lista_pagamentos"/>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.store.ui.fragment.AccountFragment"
+        android:label="@string/account"
+        tools:layout="@layout/account" />
 </navigation>
