@@ -6,6 +6,7 @@ import android.widget.LinearLayout.VERTICAL
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.store.R
 import com.store.ui.recyclerview.adapter.ProductAdapter
 import com.store.ui.viewmodel.MainViewModel
@@ -33,6 +34,16 @@ class ProductListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.hasComponents = VisualComponent(appBar = true, bottomNavigation = true)
         configuraRecyclerView()
+        configAddFab(view)
+    }
+
+    private fun configAddFab(view: View) {
+        view.findViewById<FloatingActionButton>(R.id.fragment_product_list_fab_add)
+            .setOnClickListener {
+                val direction =
+                    ProductListFragmentDirections.actionProductListFragmentToFormProductFragment()
+                navController.navigate(direction)
+            }
     }
 
     private fun buscaProdutos() {
@@ -45,9 +56,11 @@ class ProductListFragment : BaseFragment() {
         val divisor = DividerItemDecoration(context, VERTICAL)
         val recyclerView = view?.findViewById<RecyclerView>(R.id.lista_produtos_recyclerview)
         recyclerView?.addItemDecoration(divisor)
-        adapter.onItemClickListener = {
-            val directions = ProductListFragmentDirections.goToProductDetails(it.id)
-            navController.navigate(directions)
+        adapter.onItemClickListener = { product ->
+            product.id?.let { id ->
+                val directions = ProductListFragmentDirections.goToProductDetails(id)
+                navController.navigate(directions)
+            }
         }
         recyclerView?.adapter = adapter
     }

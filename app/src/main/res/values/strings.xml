@@ -13,4 +13,7 @@
     <string name="payments">Payments</string>
     <string name="email">Email</string>
     <string name="account">Account</string>
+    <string name="add_product">Add product</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

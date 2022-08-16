@@ -38,16 +38,6 @@ class PaymentFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.hasComponents = VisualComponent(appBar = true, bottomNavigation = false)
         configuraBotaoConfirmaPagamento()
-        buscaProduto()
-    }
-
-    private fun buscaProduto() {
-        viewModel.findById(productId).observe(viewLifecycleOwner, Observer {
-            it?.let { produtoEncontrado ->
-                produtoEscolhido = produtoEncontrado
-                view?.findViewById<TextView>(R.id.item_produto_preco)?.text = produtoEncontrado.price.formatToBrazilianMoney()
-            }
-        })
     }
 
     private fun configuraBotaoConfirmaPagamento() {

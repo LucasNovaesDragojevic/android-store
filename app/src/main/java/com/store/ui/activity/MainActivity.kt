@@ -1,15 +1,22 @@
 package com.store.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.store.R
+import com.store.model.Product
 import com.store.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.math.BigDecimal
+
+private const val TAG = "MainActivityTAG"
 
 class MainActivity : AppCompatActivity() {
 

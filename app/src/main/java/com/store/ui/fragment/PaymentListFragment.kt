@@ -26,9 +26,9 @@ class PaymentListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<RecyclerView>(R.id.lista_pagamentos_recyclerview).adapter = adapter
-        viewModel.findAll().observe(viewLifecycleOwner) {
-            it?.let(adapter::add)
-        }
+//        viewModel.findAll().observe(viewLifecycleOwner) {
+//            it?.let(adapter::add)
+//        }
         mainViewModel.hasComponents = VisualComponent(appBar = true, bottomNavigation = false)
     }
 }

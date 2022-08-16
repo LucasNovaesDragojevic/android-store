@@ -27,19 +27,32 @@ class ProductDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainViewModel.hasComponents = VisualComponent(appBar = false, bottomNavigation = false)
+        mainViewModel.hasComponents = VisualComponent(appBar = true, bottomNavigation = false)
         buscaProduto()
-        configuraBotaoComprar()
     }
 
-    private fun configuraBotaoComprar() {
-        val button = view?.findViewById<Button>(R.id.detalhes_produto_botao_comprar)
-        button?.setOnClickListener {
-            viewModel.productFound.value?.let {
-                val directions = ProductDetailsFragmentDirections.goToPayment(productId)
-                navController.navigate(directions)
-            }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_product_details, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_product_details_edit -> goToForm()
+            R.id.menu_product_details_delete -> deleteProduct()
         }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteProduct() {
+        viewModel.delete().observe(viewLifecycleOwner) {
+            navController.popBackStack()
+        }
+    }
+
+    private fun goToForm() {
+        ProductDetailsFragmentDirections.actionProductDetailsFragmentToFormProductFragment(productId)
+            .let(navController::navigate)
     }
 
     private fun buscaProduto() {

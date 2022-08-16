@@ -10,6 +10,5 @@ class PaymentViewModel(
     private val productRepository: ProductRepository) : ViewModel() {
 
     fun save(payment: Payment) = paymentRepository.save(payment)
-    fun findById(id: Long) = productRepository.findById(id)
     fun findAll() = paymentRepository.findAll()
 }
