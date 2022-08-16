@@ -11,4 +11,5 @@ class LoginViewModel(
     fun login(user: User) = firebaseAuthRepository.login(user)
     fun logout() = firebaseAuthRepository.logout()
     fun isLogged() = firebaseAuthRepository.isLogged()
+    fun isNotLogged() = !isLogged()
 }

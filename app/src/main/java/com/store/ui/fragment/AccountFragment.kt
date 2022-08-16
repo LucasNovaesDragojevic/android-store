@@ -24,7 +24,7 @@ class AccountFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         accountViewModel.user.observe(viewLifecycleOwner) {
             it?.let { user ->
-                view.findViewById<TextView>(R.id.hello).text = user.email
+                view.findViewById<TextView>(R.id.fragment_account_email).text = user.email
             }
         }
     }
